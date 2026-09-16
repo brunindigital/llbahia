@@ -22,6 +22,7 @@ const PRODUCTS = {
     '120': { name: 'Máquina de Lavar Consul 15kg', priceCents: 20000, bidPriceCents: 15000 },
     '194': { name: 'iPhone 17 Pro 512GB', priceCents: 36000, bidPriceCents: 22500 },
     '198': { name: 'iPhone 13 512GB', priceCents: 28000, bidPriceCents: 12500 },
+    '999': { name: 'Teste Utmify', priceCents: 1000, bidPriceCents: 1000 }, // produto temporário só para teste de PIX/pixel
 };
 
 function getProductPrice(productId, action) {
