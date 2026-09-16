@@ -1,6 +1,7 @@
 const { createPix } = require('./_lib/allowpayClient');
 const { isValidCPF, onlyDigits } = require('./_lib/cpf');
 const { getProductPrice } = require('./_lib/products');
+const { sendOrder } = require('./_lib/utmify');
 
 module.exports = async (req, res) => {
     if (req.method !== 'POST') {
@@ -9,7 +10,7 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const { customer_name, customer_email, customer_cpf, customer_phone, product_id, action } = req.body || {};
+        const { customer_name, customer_email, customer_cpf, customer_phone, product_id, action, ...trackingParameters } = req.body || {};
 
         if (!customer_name || !customer_email || !customer_cpf || !customer_phone || !product_id) {
             return res.status(400).json({ success: false, error: 'Campos obrigatórios: nome, e-mail, CPF, telefone e produto.' });
@@ -47,13 +48,28 @@ module.exports = async (req, res) => {
         });
 
         // route não é segredo: o cliente guarda junto do transaction_id para poder consultar o status depois.
+        const createdAt = new Date();
         res.json({
             success: true,
             transaction_id: result.txid,
             route: result.route,
             copy_paste: result.pix_code,
             qr_code: result.pix_qr_code,
+            created_at: createdAt.toISOString(),
         });
+
+        // Registra o pedido como "pendente" na Utmify — não bloqueia a resposta ao cliente.
+        sendOrder({
+            orderId: result.txid,
+            status: 'waiting_payment',
+            createdAt,
+            approvedDate: null,
+            customer: { name: customer_name, email: customer_email, phone: phoneDigits, document: cpfDigits },
+            product: { id: product_id, name: product.name },
+            amountCents: product.amountCents,
+            trackingParameters,
+            ip: (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress,
+        }).catch((err) => console.error('utmify waiting_payment error:', err));
     } catch (error) {
         console.error('create-pix error:', error);
         res.status(error.status === 401 ? 401 : 500).json({ success: false, error: 'Erro ao gerar o PIX. Tente novamente.' });

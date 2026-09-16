@@ -409,6 +409,7 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
                 displayPix({ copy_paste: data.copy_paste, expires_at: data.expires_at }, data.transaction_id, data.route);
                 sessionStorage.setItem('transactionId', data.transaction_id);
                 sessionStorage.setItem('pixRoute', data.route);
+                sessionStorage.setItem('pixCreatedAt', data.created_at || '');
 
             } catch (error) {
                 document.getElementById('loading').style.display = 'none';
@@ -479,6 +480,24 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
                             <small>Obrigado pela compra. Você receberá um e-mail em breve.</small>
                         `;
                         sessionStorage.setItem('paidAmount', activePrice);
+
+                        const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData') || '{}');
+                        fetch('/api/utmify-order', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                transaction_id: transactionId,
+                                product_id: productId,
+                                action: checkoutAction,
+                                customer_name: checkoutData.name,
+                                customer_email: checkoutData.email,
+                                customer_cpf: checkoutData.cpf,
+                                customer_phone: checkoutData.phone,
+                                created_at: sessionStorage.getItem('pixCreatedAt') || '',
+                                ...utmParams,
+                            }),
+                        }).catch((err) => console.error('utmify-order paid error:', err));
+
                         setTimeout(() => { window.location.href = '../pedido-confirmado.html/'; }, 3000);
                     } else if (response.ok && data.status === 'EXPIRED') {
                         showError('PIX expirado. Por favor, volte e gere um novo.');
