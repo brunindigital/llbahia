@@ -65,7 +65,6 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2377898843012759');
 fbq('track', 'PageView');
-fbq('track', 'Purchase', {currency: 'BRL'});
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
@@ -177,6 +176,11 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
             document.getElementById('d-city').textContent = cityLine || '-';
             document.getElementById('d-cep').textContent = checkoutData.cep || '-';
             document.getElementById('d-card').style.display = 'block';
+        }
+
+        const paidValue = parseFloat((paidAmount || '0').replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+        if (typeof fbq === 'function') {
+            fbq('track', 'Purchase', { value: paidValue, currency: 'BRL', content_ids: [checkoutData.productId], content_type: 'product' });
         }
     </script>
 
