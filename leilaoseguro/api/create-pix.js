@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
         // Registra o pedido como "pendente" na Utmify. A resposta ao cliente já foi enviada;
         // aguardamos aqui para a função serverless não ser encerrada antes da chamada terminar.
         try {
-            await sendOrder({
+            const utmifyResult = await sendOrder({
                 orderId: result.txid,
                 status: 'waiting_payment',
                 createdAt,
@@ -72,6 +72,7 @@ module.exports = async (req, res) => {
                 trackingParameters,
                 ip: (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress,
             });
+            console.log('utmify waiting_payment result:', JSON.stringify(utmifyResult));
         } catch (err) {
             console.error('utmify waiting_payment error:', err);
         }
