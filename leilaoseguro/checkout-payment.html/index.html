@@ -477,7 +477,8 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
                             <strong>✓ Pagamento confirmado!</strong>
                             <small>Obrigado pela compra. Você receberá um e-mail em breve.</small>
                         `;
-                        setTimeout(() => { window.location.href = '../index.html?payment=success'; }, 3000);
+                        sessionStorage.setItem('paidAmount', activePrice);
+                        setTimeout(() => { window.location.href = '../pedido-confirmado.html/'; }, 3000);
                     } else if (response.ok && data.status === 'EXPIRED') {
                         showError('PIX expirado. Por favor, volte e gere um novo.');
                     } else {
