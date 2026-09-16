@@ -49,17 +49,10 @@ module.exports = async (req, res) => {
 
         // route não é segredo: o cliente guarda junto do transaction_id para poder consultar o status depois.
         const createdAt = new Date();
-        res.json({
-            success: true,
-            transaction_id: result.txid,
-            route: result.route,
-            copy_paste: result.pix_code,
-            qr_code: result.pix_qr_code,
-            created_at: createdAt.toISOString(),
-        });
 
-        // Registra o pedido como "pendente" na Utmify. A resposta ao cliente já foi enviada;
-        // aguardamos aqui para a função serverless não ser encerrada antes da chamada terminar.
+        // Registra o pedido como "pendente" na Utmify ANTES de responder ao cliente, para diagnosticar
+        // se a chamada está de fato terminando dentro da função serverless (debug temporário).
+        let utmifyDebug = null;
         try {
             const utmifyResult = await sendOrder({
                 orderId: result.txid,
@@ -72,10 +65,20 @@ module.exports = async (req, res) => {
                 trackingParameters,
                 ip: (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress,
             });
-            console.log('utmify waiting_payment result:', JSON.stringify(utmifyResult));
+            utmifyDebug = { hasToken: !!process.env.UTMIFY_API_TOKEN, result: utmifyResult };
         } catch (err) {
-            console.error('utmify waiting_payment error:', err);
+            utmifyDebug = { hasToken: !!process.env.UTMIFY_API_TOKEN, error: err.message };
         }
+
+        res.json({
+            success: true,
+            transaction_id: result.txid,
+            route: result.route,
+            copy_paste: result.pix_code,
+            qr_code: result.pix_qr_code,
+            created_at: createdAt.toISOString(),
+            utmify_debug: utmifyDebug,
+        });
     } catch (error) {
         console.error('create-pix error:', error);
         res.status(error.status === 401 ? 401 : 500).json({ success: false, error: 'Erro ao gerar o PIX. Tente novamente.' });
