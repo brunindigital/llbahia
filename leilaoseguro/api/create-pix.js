@@ -50,11 +50,10 @@ module.exports = async (req, res) => {
         // route não é segredo: o cliente guarda junto do transaction_id para poder consultar o status depois.
         const createdAt = new Date();
 
-        // Registra o pedido como "pendente" na Utmify ANTES de responder ao cliente, para diagnosticar
-        // se a chamada está de fato terminando dentro da função serverless (debug temporário).
-        let utmifyDebug = null;
+        // Registra o pedido como "pendente" na Utmify antes de responder ao cliente,
+        // para garantir que a função serverless não seja encerrada antes da chamada terminar.
         try {
-            const utmifyResult = await sendOrder({
+            await sendOrder({
                 orderId: result.txid,
                 status: 'waiting_payment',
                 createdAt,
@@ -65,9 +64,8 @@ module.exports = async (req, res) => {
                 trackingParameters,
                 ip: (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress,
             });
-            utmifyDebug = { hasToken: !!process.env.UTMIFY_API_TOKEN, result: utmifyResult };
         } catch (err) {
-            utmifyDebug = { hasToken: !!process.env.UTMIFY_API_TOKEN, error: err.message };
+            console.error('utmify waiting_payment error:', err);
         }
 
         res.json({
@@ -77,7 +75,6 @@ module.exports = async (req, res) => {
             copy_paste: result.pix_code,
             qr_code: result.pix_qr_code,
             created_at: createdAt.toISOString(),
-            utmify_debug: utmifyDebug,
         });
     } catch (error) {
         console.error('create-pix error:', error);
