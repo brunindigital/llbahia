@@ -58,18 +58,23 @@ module.exports = async (req, res) => {
             created_at: createdAt.toISOString(),
         });
 
-        // Registra o pedido como "pendente" na Utmify — não bloqueia a resposta ao cliente.
-        sendOrder({
-            orderId: result.txid,
-            status: 'waiting_payment',
-            createdAt,
-            approvedDate: null,
-            customer: { name: customer_name, email: customer_email, phone: phoneDigits, document: cpfDigits },
-            product: { id: product_id, name: product.name },
-            amountCents: product.amountCents,
-            trackingParameters,
-            ip: (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress,
-        }).catch((err) => console.error('utmify waiting_payment error:', err));
+        // Registra o pedido como "pendente" na Utmify. A resposta ao cliente já foi enviada;
+        // aguardamos aqui para a função serverless não ser encerrada antes da chamada terminar.
+        try {
+            await sendOrder({
+                orderId: result.txid,
+                status: 'waiting_payment',
+                createdAt,
+                approvedDate: null,
+                customer: { name: customer_name, email: customer_email, phone: phoneDigits, document: cpfDigits },
+                product: { id: product_id, name: product.name },
+                amountCents: product.amountCents,
+                trackingParameters,
+                ip: (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress,
+            });
+        } catch (err) {
+            console.error('utmify waiting_payment error:', err);
+        }
     } catch (error) {
         console.error('create-pix error:', error);
         res.status(error.status === 401 ? 401 : 500).json({ success: false, error: 'Erro ao gerar o PIX. Tente novamente.' });
