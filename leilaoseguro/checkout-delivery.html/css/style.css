@@ -1,7 +1,7 @@
 :root {
     --blue: #0759c7;
     --navy: #092b58;
-    --red: #e32636;
+    --red: #FFE600;
     --light: #f3f7fc;
     --text: #172033;
     --muted: #667085;
@@ -1751,7 +1751,7 @@ footer {
 }
 
 .cb-kicker {
-    color: #e32636;
+    color: #FFE600;
     font-size: 12px;
     font-weight: 900;
     letter-spacing: .13em;
@@ -1827,7 +1827,7 @@ footer {
     justify-content: center;
     gap: 11px;
     border-radius: 30px;
-    background: #e32636;
+    background: #FFE600;
     color: white;
     font-size: 13px;
     font-weight: 900;
@@ -2109,7 +2109,7 @@ footer {
     left: 10px;
     padding: 7px 9px;
     border-radius: 7px;
-    background: #e32636;
+    background: #FFE600;
     color: white;
     font-size: 11px;
     font-weight: 900;
@@ -2145,7 +2145,7 @@ footer {
 
 .cb-buy-price {
     margin-top: 1px;
-    color: #e32636;
+    color: #FFE600;
     font-size: 21px;
     font-weight: 900;
 }
@@ -2229,7 +2229,7 @@ footer {
 
 .cb-card-timer {
     margin: 0 !important;
-    color: #e32636 !important;
+    color: #FFE600 !important;
     font-size: 10px !important;
 }
 
@@ -3296,7 +3296,7 @@ textarea {
 }
 
 .simple-buy-button {
-    background:#e32636;
+    background:#FFE600;
 }
 
 
