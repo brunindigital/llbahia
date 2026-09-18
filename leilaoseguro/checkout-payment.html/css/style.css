@@ -1,6 +1,6 @@
 :root {
-    --blue: #0759c7;
-    --navy: #092b58;
+    --blue: #FFE600;
+    --navy: #FFE600;
     --red: #FFE600;
     --light: #f3f7fc;
     --text: #172033;
@@ -12,6 +12,12 @@
 * {
     box-sizing: border-box;
 }
+
+footer,
+.site-footer {
+    display: none !important;
+}
+
 
 html {
     scroll-behavior: smooth;
@@ -89,7 +95,7 @@ a {
 
 .topbar {
     background: var(--red);
-    color: #fff;
+    color: #000;
     text-align: center;
     font-size: 12px;
     font-weight: 800;
@@ -3297,7 +3303,7 @@ textarea {
 }
 
 .simple-buy-button {
-    background:#FFE600;
+    background:#14804A;
 }
 
 

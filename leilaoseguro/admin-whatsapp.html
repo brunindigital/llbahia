@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WhatsApp - MERCADO LIVRE</title>
+    <style>
+        :root { font-family: "Segoe UI", Arial, sans-serif; color: #172033; background: #eef2f6; --ink: #172033; --muted: #687386; --line: #dce3eb; --yellow: #FFE600; --green: #14804a; }
+        * { box-sizing: border-box; }
+        body { margin: 0; }
+        header { display: flex; align-items: center; justify-content: space-between; padding: 24px 34px; background: var(--ink); color: #fff; }
+        header a { color: #fff; text-decoration: none; font-size: 13px; }
+        header strong { display: block; font-size: 20px; letter-spacing: .04em; }
+        header p { margin: 6px 0 0; color: #b8c2d1; font-size: 13px; }
+        main { max-width: 980px; margin: 0 auto; padding: 34px; }
+        .heading { margin-bottom: 22px; }
+        h1 { margin: 0; font-size: 30px; letter-spacing: -.03em; }
+        .heading p { margin: 7px 0 0; color: var(--muted); }
+        .layout { display: grid; grid-template-columns: 1fr .8fr; gap: 18px; }
+        .panel { padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: 0 8px 22px rgba(23,32,51,.04); }
+        .panel h2 { margin: 0 0 6px; font-size: 18px; }
+        .panel p { margin: 0 0 18px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+        label { display: block; margin: 16px 0 7px; font-size: 13px; font-weight: 800; }
+        input, textarea, button { width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; font: inherit; }
+        input, textarea { padding: 11px 12px; background: #fbfcfd; }
+        textarea { min-height: 300px; resize: vertical; line-height: 1.5; }
+        button { margin-top: 18px; padding: 12px 16px; cursor: pointer; background: var(--green); color: #fff; border-color: var(--green); font-weight: 800; }
+        button:hover { filter: brightness(1.08); }
+        .tokens { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+        .token { padding: 6px 8px; border-radius: 6px; background: #f0f4f8; color: #435166; font: 12px Consolas, monospace; }
+        .preview { padding: 16px; border-radius: 9px; background: #f4fff8; border: 1px solid #bde5ca; white-space: pre-wrap; color: #254034; font-size: 13px; line-height: 1.5; }
+        .status { min-height: 18px; margin-top: 12px; color: var(--green); font-size: 13px; font-weight: 800; }
+        @media (max-width: 760px) { header { padding: 20px; } main { padding: 22px 14px; } .layout { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div><strong>MERCADO LIVRE - ADMIN</strong><p>Configuração do atendimento via WhatsApp</p></div>
+        <a href="admin.html">Voltar ao painel</a>
+    </header>
+    <main>
+        <div class="heading"><h1>Atendimento no WhatsApp</h1><p>Defina o número que recebe os clientes e a mensagem enviada pelo botão do checkout.</p></div>
+        <div class="layout">
+            <section class="panel">
+                <h2>Configuração</h2>
+                <p>Use o número com DDI e DDD, somente números. Exemplo: 5511999999999.</p>
+                <label for="support-number">Número do suporte</label>
+                <input id="support-number" inputmode="numeric" placeholder="5511999999999">
+                <label for="message-template">Mensagem padrão</label>
+                <textarea id="message-template"></textarea>
+                <div class="tokens"><span class="token">{{cliente}}</span><span class="token">{{email}}</span><span class="token">{{telefone}}</span><span class="token">{{cpf}}</span><span class="token">{{lote}}</span><span class="token">{{produto}}</span><span class="token">{{valor}}</span><span class="token">{{acao}}</span><span class="token">{{endereco}}</span></div>
+                <button id="save" type="button">Salvar configuração</button>
+                <div id="status" class="status"></div>
+            </section>
+            <section class="panel">
+                <h2>Prévia da mensagem</h2>
+                <p>Esta é a mensagem que será aberta no WhatsApp do cliente.</p>
+                <div id="preview" class="preview"></div>
+            </section>
+        </div>
+    </main>
+    <script>
+        const authKey = 'mercadoLivreAdminAuthenticated';
+        if (sessionStorage.getItem(authKey) !== 'true') location.href = 'admin.html';
+        const storageKey = 'mercadoLivreWhatsAppConfig';
+        const defaultMessage = `Olá! Quero finalizar meu atendimento do leilão.\n\nCliente: {{cliente}}\nE-mail: {{email}}\nTelefone: {{telefone}}\nCPF: {{cpf}}\n\nLote: {{lote}}\nProduto: {{produto}}\nAção: {{acao}}\nValor: {{valor}}\nEndereço: {{endereco}}\n\nAguardo as orientações para concluir com segurança.`;
+        const defaults = { number: '', message: defaultMessage };
+        const numberField = document.getElementById('support-number');
+        const messageField = document.getElementById('message-template');
+        const preview = document.getElementById('preview');
+        const status = document.getElementById('status');
+        function load() { let config = {}; try { config = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch {} numberField.value = config.number || defaults.number; messageField.value = config.message || defaults.message; renderPreview(); }
+        function renderPreview() { preview.textContent = messageField.value.replaceAll('{{cliente}}', 'Cliente exemplo').replaceAll('{{email}}', 'cliente@exemplo.com').replaceAll('{{telefone}}', '(11) 99999-9999').replaceAll('{{cpf}}', '000.000.000-00').replaceAll('{{lote}}', 'LOTE 008').replaceAll('{{produto}}', 'Produto exemplo').replaceAll('{{valor}}', 'R$ 2.116,00').replaceAll('{{acao}}', 'Lance').replaceAll('{{endereco}}', 'Rua exemplo, 123 - São Paulo/SP'); }
+        messageField.addEventListener('input', renderPreview);
+        document.getElementById('save').addEventListener('click', () => { const number = numberField.value.replace(/\D/g, ''); localStorage.setItem(storageKey, JSON.stringify({ number, message: messageField.value })); numberField.value = number; status.textContent = 'Configuração salva com sucesso.'; });
+        load();
+    </script>
+</body>
+</html>
