@@ -314,7 +314,7 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
         }
 
         const WHATSAPP_BASE_URL = 'https://wa.me/SEU_NUMERO_AQUI';
-window.addEventListener('load', () => {
+function showCheckoutDetails() {
   document.getElementById('product-summary').style.display = 'flex';
   document.getElementById('shipping-info').style.display = 'flex';
   document.getElementById('secure-info').style.display = 'block';
@@ -326,7 +326,9 @@ window.addEventListener('load', () => {
     document.getElementById('address-cep').textContent = deliveryData.cep ? 'CEP ' + deliveryData.cep : '';
     document.getElementById('address-info').style.display = 'block';
   }
-});
+}
+showCheckoutDetails();
+
 function openWhatsApp() {
   if (WHATSAPP_BASE_URL.includes('SEU_NUMERO_AQUI')) {
     showError('O link oficial do atendimento ainda nao foi configurado. Aguarde a disponibilizacao do WhatsApp.');
