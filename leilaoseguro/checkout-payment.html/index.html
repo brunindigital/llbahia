@@ -146,7 +146,7 @@
             .elder-step { padding: 17px 14px; }
             .elder-bank-instructions > div { font-size: 15px; }
         }
-    </style>
+    .whatsapp-main-action { margin: 16px 0; padding: 24px 20px; border: 2px solid #168449; border-radius: 16px; background: #f4fff8; text-align: center; } .whatsapp-main-badge { display: inline-block; margin-bottom: 8px; padding: 5px 11px; border-radius: 20px; background: #e4f8eb; color: #168449; font-size: 11px; font-weight: 900; letter-spacing: 0.06em; } .whatsapp-main-action h2 { margin: 0; color: #172033; font-size: 22px; line-height: 1.25; } .whatsapp-main-action > p { max-width: 410px; margin: 8px auto 14px; color: #667085; font-size: 14px; line-height: 1.45; } .whatsapp-security-note { margin: 0 auto 16px; padding: 12px; border-radius: 10px; background: #fff; color: #344054; font-size: 12px; line-height: 1.45; } .whatsapp-button { display: flex; align-items: center; justify-content: center; min-height: 58px; padding: 0 16px; border-radius: 10px; background: #168449; color: #fff; font-size: 15px; font-weight: 900; text-decoration: none; box-shadow: 0 4px 10px rgba(22,132,73,0.18); transition: background 0.2s; } .whatsapp-button:hover { background: #0f6838; } .whatsapp-link-note { display: block; margin-top: 10px; color: #667085; font-size: 11px; } </style>
 <!-- Meta Pixel Code -->
 <script async="" src="js/fbevents.js"></script><script>
 !function(f,b,e,v,n,t,s)
@@ -195,8 +195,8 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
                 <!-- CABEÇALHO -->
                 <div class="elder-check">✓</div>
                 <div class="elder-kicker">ÚLTIMA ETAPA</div>
-                <h1 class="elder-title">Finalize seu pagamento</h1>
-                <p class="elder-subtitle">Faça o pagamento do valor total via Pix. A confirmação acontece automaticamente.</p>
+                <h1 class="elder-title">Finalize sua arrematação com segurança</h1>
+                <p class="elder-subtitle">Converse com nosso atendente para concluir sua arrematação e receber as orientações oficiais.</p>
 
                 <div class="error-message" id="error-message">Dados incompletos. Por favor, volte e preencha todas as informações.</div>
 
@@ -206,71 +206,17 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
                     <p>Gerando seu PIX...</p>
                 </div>
 
-                <!-- PIX PRINCIPAL -->
-                <div class="pix-main-action" id="pix-display" style="display:none">
-                    <div class="pix-main-badge">PIX</div>
-                    <h2>Pague agora pelo Pix</h2>
-                    <p>Copie o código abaixo e cole no aplicativo do seu banco.</p>
+                <!-- ATENDIMENTO WHATSAPP -->
+<div class="whatsapp-main-action" id="whatsapp-display">
+  <div class="whatsapp-main-badge">ATENDIMENTO</div>
+  <h2>Finalize sua arrematação pelo WhatsApp</h2>
+  <p>Por segurança, finalize sua arrematação diretamente com nosso atendente no WhatsApp.</p>
+  <div class="whatsapp-security-note">🔒 Confirme os dados do lote e receba as instruções de pagamento somente pelo canal oficial.</div>
+  <a id="whatsapp-button" class="whatsapp-button" href="#" onclick="return openWhatsApp()">💬 CHAMAR ATENDENTE NO WHATSAPP</a>
+  <small class="whatsapp-link-note">O link oficial do atendimento será disponibilizado nesta página.</small>
+</div>
 
-                    <div class="pix-main-value">
-                        <small>Valor do Pagamento</small>
-                        <strong id="pix-price"></strong>
-                    </div>
-
-                    <label class="pix-code-label" for="pix-code">Pix Copia e Cola</label>
-                    <div class="elder-pix-code">
-                        <input id="pix-code" readonly="" aria-label="Código Pix">
-                    </div>
-
-                    <button id="copy-pix" type="button" class="elder-copy-button" onclick="copyPixCode()">
-                        📋 COPIAR CÓDIGO PIX
-                    </button>
-
-                    <div id="copy-feedback" class="elder-copy-feedback">
-                        ✓ Código copiado! Agora abra o aplicativo do seu banco.
-                    </div>
-
-                    <div class="pix-auto-confirm">
-                        ✓ Não precisa enviar comprovante
-                        <span>O pagamento é identificado automaticamente.</span>
-                    </div>
-                </div>
-
-                <!-- PASSO 2 — BANCO -->
-                <div class="elder-step" id="bank-steps" style="display:none">
-                    <div class="elder-step-header">
-                        <span>2</span>
-                        <div>
-                            <strong>Abra o aplicativo do seu banco</strong>
-                            <small>Pode ser o banco que você já usa.</small>
-                        </div>
-                    </div>
-                    <div class="elder-bank-instructions">
-                        <div><b>1</b><span>Procure a opção <strong>Pix</strong>.</span></div>
-                        <div><b>2</b><span>Toque em <strong>Pix Copia e Cola</strong>.</span></div>
-                        <div><b>3</b><span>Cole o código que você acabou de copiar.</span></div>
-                        <div><b>4</b><span>Confira o valor: <strong id="bank-price"></strong>.</span></div>
-                        <div><b>5</b><span>Confirme o pagamento.</span></div>
-                    </div>
-                </div>
-
-                <!-- QR CODE -->
-                <details id="qr-details" class="elder-qr" style="display:none">
-                    <summary>Prefere pagar usando QR Code?</summary>
-                    <div class="elder-qr-content">
-                        <p>Use outro celular para escanear este código.</p>
-                        <img id="pix-qrcode" alt="QR Code Pix">
-                    </div>
-                </details>
-
-                <!-- STATUS AGUARDANDO -->
-                <div id="payment-status" class="elder-status" style="display:none">
-                    <span class="elder-status-dot"></span>
-                    <strong>Estamos aguardando o pagamento</strong>
-                    <small>Assim que você pagar, esta página confirma automaticamente.</small>
-                </div>
-
-                <!-- PRODUTO -->
+<!-- PRODUTO -->
                 <div class="elder-product" id="product-summary" style="display:none">
                     <div class="elder-product-image">
                         <img id="product-img" src="" alt="Produto">
@@ -367,150 +313,30 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
             document.getElementById('product-lote').textContent = product.lote;
         }
 
-        window.addEventListener('load', () => { generatePix(); });
-
-        async function generatePix() {
-            const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData') || '{}');
-
-            if (!product || !checkoutData.name) {
-                showError('Dados incompletos. Por favor, volte e preencha todas as informações.');
-                document.getElementById('loading').style.display = 'none';
-                return;
-            }
-
-            document.getElementById('loading').style.display = 'block';
-
-            try {
-                const payload = {
-                    amount_cents: activePriceCents,
-                    customer_name: checkoutData.name,
-                    customer_email: checkoutData.email,
-                    customer_cpf: checkoutData.cpf,
-                    customer_phone: checkoutData.phone,
-                    external_reference: `order_${productId}_${Date.now()}`,
-                    product_id: productId,
-                    action: checkoutAction,
-                    ...utmParams,
-                };
-
-                const response = await fetch('/api/create-pix', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                });
-
-                const data = await response.json();
-
-                if (!response.ok || !data.success) {
-                    throw new Error(data.error || 'Erro ao gerar PIX');
-                }
-
-                document.getElementById('loading').style.display = 'none';
-                displayPix({ copy_paste: data.copy_paste, expires_at: data.expires_at }, data.transaction_id, data.route);
-                sessionStorage.setItem('transactionId', data.transaction_id);
-                sessionStorage.setItem('pixRoute', data.route);
-                sessionStorage.setItem('pixCreatedAt', data.created_at || '');
-
-            } catch (error) {
-                document.getElementById('loading').style.display = 'none';
-                showError(`Erro: ${error.message}`);
-            }
-        }
-
-        function displayPix(pixData, transactionId, route) {
-            document.getElementById('pix-code').value = pixData.copy_paste;
-            document.getElementById('pix-price').textContent = activePrice;
-            document.getElementById('bank-price').textContent = activePrice;
-
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixData.copy_paste)}`;
-            document.getElementById('pix-qrcode').src = qrUrl;
-
-            document.getElementById('pix-display').style.display = 'block';
-            document.getElementById('bank-steps').style.display = 'block';
-            document.getElementById('qr-details').style.display = 'block';
-            document.getElementById('payment-status').style.display = 'grid';
-            document.getElementById('product-summary').style.display = 'flex';
-            document.getElementById('shipping-info').style.display = 'flex';
-
-            // Endereço de entrega
-            const deliveryData = JSON.parse(sessionStorage.getItem('deliveryData') || '{}');
-            if (deliveryData.address) {
-                const street = `${deliveryData.address}${deliveryData.number ? ', ' + deliveryData.number : ''}`;
-                const city = [deliveryData.neighborhood, deliveryData.city, deliveryData.state].filter(Boolean).join(' - ');
-                const cep = deliveryData.cep ? `CEP ${deliveryData.cep}` : '';
-                document.getElementById('address-street').textContent = street;
-                document.getElementById('address-city').textContent = city;
-                document.getElementById('address-cep').textContent = cep;
-                document.getElementById('address-info').style.display = 'block';
-            }
-
-            document.getElementById('secure-info').style.display = 'block';
-            document.getElementById('back-link').style.display = 'block';
-
-            pollPaymentStatus(transactionId, route);
-        }
-
-        function copyPixCode() {
-            const code = document.getElementById('pix-code').value;
-            navigator.clipboard.writeText(code).then(() => {
-                const feedback = document.getElementById('copy-feedback');
-                feedback.classList.add('visible');
-                const btn = document.getElementById('copy-pix');
-                btn.textContent = '✓ CÓDIGO COPIADO!';
-                setTimeout(() => {
-                    feedback.classList.remove('visible');
-                    btn.textContent = '📋 COPIAR CÓDIGO PIX';
-                }, 3000);
-            });
-        }
-
-        function pollPaymentStatus(transactionId, route, attempts = 0) {
-            if (attempts > 120) return;
-
-            setTimeout(async () => {
-                try {
-                    const response = await fetch(`/api/check-payment?transaction_id=${transactionId}&route=${encodeURIComponent(route)}`);
-                    const data = await response.json();
-
-                    if (response.ok && data.success && data.status === 'PAID') {
-                        const statusEl = document.getElementById('payment-status');
-                        statusEl.innerHTML = `
-                            <span class="elder-status-dot" style="background:#22a35a"></span>
-                            <strong>✓ Pagamento confirmado!</strong>
-                            <small>Obrigado pela compra. Você receberá um e-mail em breve.</small>
-                        `;
-                        sessionStorage.setItem('paidAmount', activePrice);
-
-                        const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData') || '{}');
-                        fetch('/api/utmify-order', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                transaction_id: transactionId,
-                                product_id: productId,
-                                action: checkoutAction,
-                                customer_name: checkoutData.name,
-                                customer_email: checkoutData.email,
-                                customer_cpf: checkoutData.cpf,
-                                customer_phone: checkoutData.phone,
-                                created_at: sessionStorage.getItem('pixCreatedAt') || '',
-                                ...utmParams,
-                            }),
-                        }).catch((err) => console.error('utmify-order paid error:', err));
-
-                        setTimeout(() => { window.location.href = '../pedido-confirmado.html/'; }, 3000);
-                    } else if (response.ok && data.status === 'EXPIRED') {
-                        showError('PIX expirado. Por favor, volte e gere um novo.');
-                    } else {
-                        pollPaymentStatus(transactionId, route, attempts + 1);
-                    }
-                } catch (error) {
-                    pollPaymentStatus(transactionId, route, attempts + 1);
-                }
-            }, 3000);
-        }
-
-        function showError(message) {
+        const WHATSAPP_BASE_URL = 'https://wa.me/SEU_NUMERO_AQUI';
+window.addEventListener('load', () => {
+  document.getElementById('product-summary').style.display = 'flex';
+  document.getElementById('shipping-info').style.display = 'flex';
+  document.getElementById('secure-info').style.display = 'block';
+  document.getElementById('back-link').style.display = 'block';
+  const deliveryData = JSON.parse(sessionStorage.getItem('deliveryData') || '{}');
+  if (deliveryData.address) {
+    document.getElementById('address-street').textContent = deliveryData.address + (deliveryData.number ? ', ' + deliveryData.number : '');
+    document.getElementById('address-city').textContent = [deliveryData.neighborhood, deliveryData.city, deliveryData.state].filter(Boolean).join(' - ');
+    document.getElementById('address-cep').textContent = deliveryData.cep ? 'CEP ' + deliveryData.cep : '';
+    document.getElementById('address-info').style.display = 'block';
+  }
+});
+function openWhatsApp() {
+  if (WHATSAPP_BASE_URL.includes('SEU_NUMERO_AQUI')) {
+    showError('O link oficial do atendimento ainda nao foi configurado. Aguarde a disponibilizacao do WhatsApp.');
+    return false;
+  }
+  const message = encodeURIComponent('Olá, quero finalizar minha arrematação do ' + (product ? product.name : 'lote') + ' com segurança.');
+  window.open(WHATSAPP_BASE_URL + '?text=' + message, '_blank', 'noopener,noreferrer');
+  return false;
+}
+function showError(message) {
             const errorEl = document.getElementById('error-message');
             errorEl.textContent = message;
             errorEl.classList.add('active');
