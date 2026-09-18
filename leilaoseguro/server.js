@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/api/create-pix', express.json());
 app.use('/api/check-payment', express.json());
 app.use('/api/utmify-order', express.json());
+app.use('/api/pushcut', express.json());
 
 // Webhook needs the raw body for HMAC validation
 app.use('/api/webhooks/allowpay', express.raw({ type: '*/*' }));
@@ -18,12 +19,14 @@ app.use('/api/webhooks/allowpay', express.raw({ type: '*/*' }));
 const createPix = require('./api/create-pix');
 const checkPayment = require('./api/check-payment');
 const utmifyOrder = require('./api/utmify-order');
+const pushcut = require('./api/pushcut');
 const allowpayWebhook = require('./api/webhooks/allowpay');
 
 // Mount API routes
 app.post('/api/create-pix', (req, res) => createPix(req, res));
 app.get('/api/check-payment', (req, res) => checkPayment(req, res));
 app.post('/api/utmify-order', (req, res) => utmifyOrder(req, res));
+app.post('/api/pushcut', (req, res) => pushcut(req, res));
 app.post('/api/webhooks/allowpay', (req, res) => allowpayWebhook(req, res));
 
 // --- Static file serving ---
