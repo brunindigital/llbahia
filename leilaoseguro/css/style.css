@@ -114,9 +114,9 @@ a {
 .brand-logo {
     display: flex;
     align-items: center;
-    height: 52px;
+    height: 64px;
     max-width: 175px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .site-logo {
@@ -1000,8 +1000,9 @@ footer {
     }
 
     .brand-logo {
-        height: 48px;
+        height: 56px;
         max-width: 135px;
+        overflow: visible;
     }
 
     .site-logo {
