@@ -122,9 +122,9 @@ a {
 .site-logo {
     display: block;
     width: auto;
-    height: 31px;
+    height: 64px;
     max-width: 165px;
-    max-height: 31px;
+    max-height: 64px;
     object-fit: contain;
 }
 
@@ -1005,9 +1005,9 @@ footer {
     }
 
     .site-logo {
-        height: 28px;
-        max-height: 28px;
-        max-width: 130px;
+        height: 56px;
+        max-height: 56px;
+        max-width: 165px;
     }
 
     .header-security-right {
