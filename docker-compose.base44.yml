@@ -1,0 +1,19 @@
+services:
+  web:
+    image: node:22-slim
+    working_dir: /app/leilaoseguro
+    command: sh -c "npm install --omit=dev && node server.js"
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - ALLOWPAY_BASE_URL=${ALLOWPAY_BASE_URL:-https://allow-gi0i.onrender.com}
+      - ALLOWPAY_API_KEY=${ALLOWPAY_API_KEY:-}
+      - ALLOWPAY_WEBHOOK_SECRET=${ALLOWPAY_WEBHOOK_SECRET:-}
+      - UTMIFY_API_TOKEN=${UTMIFY_API_TOKEN:-}
+      - PUBLIC_URL=${PUBLIC_URL:-}
+    env_file:
+      - /run/base44/app.env
+    volumes:
+      - .:/app
+    restart: unless-stopped

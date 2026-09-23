@@ -1,0 +1,25 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "ALLOWPAY_API_KEY",
+      "description": "API key for the AllowPay PIX payment gateway (from your AllowPay dashboard). Required for the /api/create-pix endpoint to generate PIX payments.",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "ALLOWPAY_WEBHOOK_SECRET",
+      "description": "Secret used to sign/validate AllowPay webhook callbacks (optional).",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "UTMIFY_API_TOKEN",
+      "description": "API token for Utmify order tracking (from your Utmify dashboard). Optional — the API skips tracking if not set.",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    }
+  ]
+}
