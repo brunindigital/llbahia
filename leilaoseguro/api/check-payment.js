@@ -16,14 +16,16 @@ module.exports = async (req, res) => {
     try {
         const { transaction_id: txid, route } = req.query || {};
 
-        if (!txid || !route) {
+        if (![txid, route].every((value) => typeof value === 'string' && value.trim())) {
             return res.status(400).json({ success: false, error: 'transaction_id e route são obrigatórios.' });
         }
 
         const result = await getPaymentStatus({ txid, route });
-        res.json({ success: true, status: mapStatus(result.status) });
+        res.setHeader('Cache-Control', 'no-store');
+        res.json({ success: true, status: mapStatus(result.status), payment_status: result.status });
     } catch (error) {
         console.error('check-payment error:', error);
-        res.status(500).json({ success: false, error: 'Erro ao consultar o pagamento.' });
+        const status = [400, 401, 503, 502].includes(error.status) ? error.status : 500;
+        res.status(status).json({ success: false, error: 'Erro ao consultar o pagamento.' });
     }
 };

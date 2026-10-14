@@ -196,25 +196,67 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
                 <div class="elder-check">✓</div>
                 <div class="elder-kicker">ÚLTIMA ETAPA</div>
                 <h1 class="elder-title">Finalize sua arrematação com segurança</h1>
-                <p class="elder-subtitle">Converse com nosso atendente para concluir sua arrematação e receber as orientações oficiais.</p>
+                <p class="elder-subtitle">Faça o pagamento do valor total via Pix. A confirmação acontece automaticamente.</p>
 
                 <div class="error-message" id="error-message">Dados incompletos. Por favor, volte e preencha todas as informações.</div>
 
                 <!-- LOADING -->
                 <div id="loading" class="loading" style="display: none;">
                     <div class="spinner"></div>
-                    <p>Carregando informações do lote...</p>
+                    <p>Gerando seu PIX...</p>
                 </div>
 
-                <!-- ATENDIMENTO WHATSAPP -->
-<div class="whatsapp-main-action" id="whatsapp-display">
-  <div class="whatsapp-main-badge">ATENDIMENTO</div>
-  <h2>Finalize sua arrematação pelo WhatsApp</h2>
-  <p>Por segurança, finalize sua arrematação diretamente com nosso atendente no WhatsApp.</p>
-  <div class="whatsapp-security-note">🔒 Confirme os dados do lote e receba as instruções de pagamento somente pelo canal oficial.</div>
-  <a id="whatsapp-button" class="whatsapp-button" href="#" onclick="return openWhatsApp()">💬 CHAMAR ATENDENTE NO WHATSAPP</a>
-  <small class="whatsapp-link-note">O link oficial do atendimento será disponibilizado nesta página.</small>
-</div>
+                <div class="pix-main-action" id="pix-display" style="display:none">
+                    <div class="pix-main-badge">PIX</div>
+                    <h2>Pague agora pelo Pix</h2>
+                    <p>Copie o código abaixo e cole no aplicativo do seu banco.</p>
+                    <div class="pix-main-value">
+                        <small>Valor do Pagamento</small>
+                        <strong id="pix-price"></strong>
+                    </div>
+                    <label class="pix-code-label" for="pix-code">Pix Copia e Cola</label>
+                    <div class="elder-pix-code">
+                        <input id="pix-code" readonly aria-label="Código Pix">
+                    </div>
+                    <button id="copy-pix" type="button" class="elder-copy-button" onclick="copyPixCode()">
+                        📋 COPIAR CÓDIGO PIX
+                    </button>
+                    <div id="copy-feedback" class="elder-copy-feedback">
+                        ✓ Código copiado! Agora abra o aplicativo do seu banco.
+                    </div>
+                    <div class="pix-auto-confirm">
+                        ✓ Não precisa enviar comprovante
+                        <span>O pagamento é identificado automaticamente.</span>
+                    </div>
+                </div>
+                <div class="elder-step" id="bank-steps" style="display:none">
+                    <div class="elder-step-header">
+                        <span>2</span>
+                        <div>
+                            <strong>Abra o aplicativo do seu banco</strong>
+                            <small>Pode ser o banco que você já usa.</small>
+                        </div>
+                    </div>
+                    <div class="elder-bank-instructions">
+                        <div><b>1</b><span>Procure a opção <strong>Pix</strong>.</span></div>
+                        <div><b>2</b><span>Toque em <strong>Pix Copia e Cola</strong>.</span></div>
+                        <div><b>3</b><span>Cole o código que você acabou de copiar.</span></div>
+                        <div><b>4</b><span>Confira o valor: <strong id="bank-price"></strong>.</span></div>
+                        <div><b>5</b><span>Confirme o pagamento.</span></div>
+                    </div>
+                </div>
+                <details id="qr-details" class="elder-qr" style="display:none">
+                    <summary>Prefere pagar usando QR Code?</summary>
+                    <div class="elder-qr-content">
+                        <p>Use outro celular para escanear este código.</p>
+                        <img id="pix-qrcode" alt="QR Code Pix">
+                    </div>
+                </details>
+                <div id="payment-status" class="elder-status" style="display:none">
+                    <span class="elder-status-dot"></span>
+                    <strong>Estamos aguardando o pagamento</strong>
+                    <small>Assim que você pagar, esta página confirma automaticamente.</small>
+                </div>
 
 <!-- PRODUTO -->
                 <div class="elder-product" id="product-summary" style="display:none">
@@ -249,7 +291,7 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
                 <!-- PAGAMENTO SEGURO -->
                 <div class="elder-secure" id="secure-info" style="display:none">
                     <strong>🔒 Pagamento seguro</strong>
-                    <span>Finalize pelo canal oficial do WhatsApp e não envie pagamentos ou comprovantes para contatos não confirmados.</span>
+                    <span>Você não precisa enviar comprovante.<br>A confirmação do Pix acontece automaticamente.</span>
                 </div>
 
                 <!-- VOLTAR -->
@@ -313,39 +355,185 @@ src="https://www.facebook.com/tr?id=2377898843012759&ev=PageView&noscript=1"
             document.getElementById('product-lote').textContent = product.lote;
         }
 
-    const whatsappConfigKey = 'mercadoLivreWhatsAppConfig';
-    const defaultWhatsAppMessage = `Olá! Quero finalizar meu atendimento do leilão.\n\nCliente: {{cliente}}\nE-mail: {{email}}\nTelefone: {{telefone}}\nCPF: {{cpf}}\n\nLote: {{lote}}\nProduto: {{produto}}\nAção: {{acao}}\nValor: {{valor}}\nEndereço: {{endereco}}\n\nAguardo as orientações para concluir com segurança.`;
-    function getWhatsAppConfig() { try { return { number: '', message: defaultWhatsAppMessage, ...JSON.parse(localStorage.getItem(whatsappConfigKey) || '{}') }; } catch { return { number: '', message: defaultWhatsAppMessage }; } }
-    function getCheckoutCustomer() { const checkout = JSON.parse(sessionStorage.getItem('checkoutData') || '{}'); const delivery = JSON.parse(sessionStorage.getItem('deliveryData') || '{}'); return { ...checkout, ...delivery }; }
-function showCheckoutDetails() {
-  document.getElementById('product-summary').style.display = 'flex';
-  document.getElementById('shipping-info').style.display = 'flex';
-  document.getElementById('secure-info').style.display = 'block';
-  document.getElementById('back-link').style.display = 'block';
-  const deliveryData = JSON.parse(sessionStorage.getItem('deliveryData') || '{}');
-  if (deliveryData.address) {
-    document.getElementById('address-street').textContent = deliveryData.address + (deliveryData.number ? ', ' + deliveryData.number : '');
-    document.getElementById('address-city').textContent = [deliveryData.neighborhood, deliveryData.city, deliveryData.state].filter(Boolean).join(' - ');
-    document.getElementById('address-cep').textContent = deliveryData.cep ? 'CEP ' + deliveryData.cep : '';
-    document.getElementById('address-info').style.display = 'block';
-  }
-}
-showCheckoutDetails();
+        window.addEventListener('load', () => { generatePix(); });
 
-function openWhatsApp() {
-    const config = getWhatsAppConfig();
-    if (!config.number) {
-    showError('O link oficial do atendimento ainda nao foi configurado. Aguarde a disponibilizacao do WhatsApp.');
-    return false;
-  }
-    const customer = getCheckoutCustomer();
-    const address = [customer.address, customer.number, customer.complement, customer.neighborhood, customer.city, customer.state, customer.cep].filter(Boolean).join(', ');
-    const values = { cliente: customer.name || customer.customer_name || '-', email: customer.email || customer.customer_email || '-', telefone: customer.phone || customer.customer_phone || '-', cpf: customer.cpf || customer.customer_cpf || '-', lote: product?.lote || `LOTE ${productId}`, produto: product?.name || '-', valor: activePrice || '-', acao: checkoutAction === 'bid' ? 'Lance' : 'Compra direta', endereco: address || '-' };
-    const message = encodeURIComponent(config.message.replace(/{{(cliente|email|telefone|cpf|lote|produto|valor|acao|endereco)}}/g, (_, key) => values[key]));
-    window.open('https://wa.me/' + config.number + '?text=' + message, '_blank', 'noopener,noreferrer');
-  return false;
-}
-function showError(message) {
+        async function generatePix() {
+            const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData') || '{}');
+
+            if (!product || !checkoutData.name) {
+                showError('Dados incompletos. Por favor, volte e preencha todas as informações.');
+                document.getElementById('loading').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+
+            try {
+                const payload = {
+                    amount_cents: activePriceCents,
+                    customer_name: checkoutData.name,
+                    customer_email: checkoutData.email,
+                    customer_cpf: checkoutData.cpf,
+                    customer_phone: checkoutData.phone,
+                    external_reference: `order_${productId}_${Date.now()}`,
+                    product_id: productId,
+                    action: checkoutAction,
+                    ...utmParams,
+                };
+
+                const response = await fetch('/api/create-pix', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.error || 'Erro ao gerar PIX');
+                }
+
+                document.getElementById('loading').style.display = 'none';
+                sessionStorage.setItem('transactionId', data.transaction_id);
+                sessionStorage.setItem('pixRoute', data.route);
+                sessionStorage.setItem('pixCreatedAt', data.created_at || '');
+                displayPix({ copy_paste: data.copy_paste, qr_code: data.qr_code }, data.transaction_id, data.route);
+
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                showError(`Erro: ${error.message}`);
+            }
+        }
+
+        function displayPix(pixData, transactionId, route) {
+            document.getElementById('pix-code').value = pixData.copy_paste;
+            document.getElementById('pix-price').textContent = activePrice;
+            document.getElementById('bank-price').textContent = activePrice;
+
+            document.getElementById('pix-qrcode').src = pixData.qr_code;
+            document.getElementById('pix-qrcode').onerror = () => {
+                showError('Não foi possível carregar o QR Code. Use o código Pix copia-e-cola.');
+            };
+
+            document.getElementById('pix-display').style.display = 'block';
+            document.getElementById('bank-steps').style.display = 'block';
+            document.getElementById('qr-details').style.display = 'block';
+            document.getElementById('payment-status').style.display = 'grid';
+            document.getElementById('product-summary').style.display = 'flex';
+            document.getElementById('shipping-info').style.display = 'flex';
+
+            // Endereço de entrega
+            const deliveryData = JSON.parse(sessionStorage.getItem('deliveryData') || '{}');
+            if (deliveryData.address) {
+                const street = `${deliveryData.address}${deliveryData.number ? ', ' + deliveryData.number : ''}`;
+                const city = [deliveryData.neighborhood, deliveryData.city, deliveryData.state].filter(Boolean).join(' - ');
+                const cep = deliveryData.cep ? `CEP ${deliveryData.cep}` : '';
+                document.getElementById('address-street').textContent = street;
+                document.getElementById('address-city').textContent = city;
+                document.getElementById('address-cep').textContent = cep;
+                document.getElementById('address-info').style.display = 'block';
+            }
+
+            document.getElementById('secure-info').style.display = 'block';
+            document.getElementById('back-link').style.display = 'block';
+
+            pollPaymentStatus(transactionId, route);
+        }
+
+        function copyPixCode() {
+            const code = document.getElementById('pix-code').value;
+            navigator.clipboard.writeText(code).then(() => {
+                const feedback = document.getElementById('copy-feedback');
+                feedback.classList.add('visible');
+                const btn = document.getElementById('copy-pix');
+                btn.textContent = '✓ CÓDIGO COPIADO!';
+                setTimeout(() => {
+                    feedback.classList.remove('visible');
+                    btn.textContent = '📋 COPIAR CÓDIGO PIX';
+                }, 3000);
+            });
+        }
+
+        function pollPaymentStatus(transactionId, route) {
+            setTimeout(async () => {
+                try {
+                    const response = await fetch(`/api/check-payment?transaction_id=${encodeURIComponent(transactionId)}&route=${encodeURIComponent(route)}`, {
+                        cache: 'no-store',
+                        signal: AbortSignal.timeout(20000),
+                    });
+                    const data = await response.json();
+                    if (!response.ok || !data.success) {
+                        const message = data.error || 'Erro ao consultar o pagamento.';
+                        if (response.status >= 400 && response.status < 500) {
+                            showError(message);
+                            document.querySelector('#payment-status small').textContent = 'Consulta interrompida. Entre em contato com o suporte antes de pagar novamente.';
+                            return;
+                        }
+                        throw new Error(message);
+                    }
+                    document.getElementById('error-message').classList.remove('active');
+
+                    if (data.payment_status === 'approved') {
+                        const statusEl = document.getElementById('payment-status');
+                        statusEl.innerHTML = `
+                            <span class="elder-status-dot" style="background:#22a35a"></span>
+                            <strong>✓ Pagamento confirmado!</strong>
+                            <small>Obrigado pela compra. Você receberá um e-mail em breve.</small>
+                        `;
+                        sessionStorage.setItem('paidAmount', activePrice);
+
+                        const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData') || '{}');
+                        fetch('/api/utmify-order', {
+                            method: 'POST',
+                            keepalive: true,
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                transaction_id: transactionId,
+                                route,
+                                product_id: productId,
+                                action: checkoutAction,
+                                customer_name: checkoutData.name,
+                                customer_email: checkoutData.email,
+                                customer_cpf: checkoutData.cpf,
+                                customer_phone: checkoutData.phone,
+                                created_at: sessionStorage.getItem('pixCreatedAt') || '',
+                                ...utmParams,
+                            }),
+                        }).then(async (response) => {
+                            const result = await response.json();
+                            if (!response.ok || !result.success) {
+                                throw new Error(result.error || 'Não foi possível reportar o pedido à Utmify.');
+                            }
+                        }).catch((err) => console.error('utmify-order paid error:', err));
+
+                        setTimeout(() => { window.location.href = '../pedido-confirmado.html/index.html'; }, 3000);
+                    } else if (data.payment_status === 'waiting_payment') {
+                        document.querySelector('#payment-status small').textContent = 'Assim que você pagar, esta página confirma automaticamente.';
+                        pollPaymentStatus(transactionId, route);
+                    } else {
+                        const messages = {
+                            expired: 'PIX expirado. Por favor, volte e gere um novo.',
+                            declined: 'Pagamento recusado.',
+                            canceled: 'Pagamento cancelado.',
+                            refunded: 'Pagamento reembolsado.',
+                            chargeback: 'Pagamento em contestação.',
+                        };
+                        const message = messages[data.payment_status];
+                        if (!message) throw new Error('Status de pagamento desconhecido.');
+                        document.querySelector('#payment-status strong').textContent = message;
+                        document.querySelector('#payment-status small').textContent = 'A consulta deste pagamento foi encerrada.';
+                        showError(message);
+                    }
+                } catch (error) {
+                    console.error('check-payment error:', error);
+                    showError('Não foi possível confirmar o status agora. Tentaremos novamente em 5 segundos. Não pague novamente.');
+                    document.querySelector('#payment-status small').textContent = 'Reconectando para consultar o pagamento...';
+                    pollPaymentStatus(transactionId, route);
+                }
+            }, 5000);
+        }
+
+        function showError(message) {
             const errorEl = document.getElementById('error-message');
             errorEl.textContent = message;
             errorEl.classList.add('active');

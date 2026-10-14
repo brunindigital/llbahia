@@ -1,6 +1,7 @@
 const { sendOrder } = require('./_lib/utmify');
 const { getProductPrice } = require('./_lib/products');
 const { onlyDigits } = require('./_lib/cpf');
+const { getPaymentStatus } = require('./_lib/allowpayClient');
 
 // Chamado pelo front-end assim que o polling detecta o PIX pago, para reportar a venda à Utmify.
 module.exports = async (req, res) => {
@@ -12,6 +13,7 @@ module.exports = async (req, res) => {
     try {
         const {
             transaction_id: orderId,
+            route,
             product_id,
             action,
             customer_name,
@@ -22,7 +24,7 @@ module.exports = async (req, res) => {
             ...trackingParameters
         } = req.body || {};
 
-        if (!orderId || !product_id || !customer_name || !customer_email) {
+        if (!orderId || typeof orderId !== 'string' || typeof route !== 'string' || !route.trim() || !product_id || !customer_name || !customer_email) {
             return res.status(400).json({ success: false, error: 'Dados obrigatórios ausentes.' });
         }
 
@@ -31,8 +33,16 @@ module.exports = async (req, res) => {
             return res.status(400).json({ success: false, error: 'Produto inválido.' });
         }
 
+        const payment = await getPaymentStatus({ txid: orderId, route });
+        if (payment.status !== 'approved') {
+            return res.status(409).json({ success: false, error: 'Pagamento ainda não aprovado.' });
+        }
+
         const approvedDate = new Date();
         const createdAt = created_at ? new Date(created_at) : approvedDate;
+        if (Number.isNaN(createdAt.getTime())) {
+            return res.status(400).json({ success: false, error: 'Data de criação inválida.' });
+        }
 
         const result = await sendOrder({
             orderId,

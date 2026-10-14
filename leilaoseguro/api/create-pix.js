@@ -12,8 +12,14 @@ module.exports = async (req, res) => {
     try {
         const { customer_name, customer_email, customer_cpf, customer_phone, product_id, action, ...trackingParameters } = req.body || {};
 
-        if (!customer_name || !customer_email || !customer_cpf || !customer_phone || !product_id) {
+        if (![customer_name, customer_email, customer_cpf, customer_phone, product_id].every((value) => typeof value === 'string' && value.trim())) {
             return res.status(400).json({ success: false, error: 'Campos obrigatórios: nome, e-mail, CPF, telefone e produto.' });
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer_email.trim())) {
+            return res.status(400).json({ success: false, error: 'E-mail inválido.' });
+        }
+        if (action !== undefined && !['buy', 'bid'].includes(action)) {
+            return res.status(400).json({ success: false, error: 'Ação inválida.' });
         }
 
         const product = getProductPrice(product_id, action);
@@ -31,20 +37,22 @@ module.exports = async (req, res) => {
             return res.status(400).json({ success: false, error: 'Telefone inválido.' });
         }
 
-        const publicUrl = (process.env.PUBLIC_URL || '').replace(/\/$/, '');
-        const webhookUrl = publicUrl ? `${publicUrl}/api/webhooks/allowpay` : undefined;
+        let origin;
+        if (typeof req.headers.origin === 'string') {
+            const requestOrigin = new URL(req.headers.origin);
+            if (requestOrigin.host === req.headers.host) origin = requestOrigin.origin;
+        }
 
         const result = await createPix({
             amountCents: product.amountCents, // recalculado no servidor — o valor enviado pelo cliente é ignorado
             description: product.name,
             customer: {
-                name: customer_name,
-                email: customer_email,
+                name: customer_name.trim(),
+                email: customer_email.trim(),
                 cellphone: phoneDigits,
                 taxId: cpfDigits,
             },
-            webhookUrl,
-            webhookSecret: webhookUrl ? process.env.ALLOWPAY_WEBHOOK_SECRET : undefined,
+            origin,
         });
 
         // route não é segredo: o cliente guarda junto do transaction_id para poder consultar o status depois.
@@ -78,6 +86,7 @@ module.exports = async (req, res) => {
         });
     } catch (error) {
         console.error('create-pix error:', error);
-        res.status(error.status === 401 ? 401 : 500).json({ success: false, error: 'Erro ao gerar o PIX. Tente novamente.' });
+        const status = [400, 401, 503, 502].includes(error.status) ? error.status : 500;
+        res.status(status).json({ success: false, error: 'Erro ao gerar o PIX. Tente novamente.' });
     }
 };

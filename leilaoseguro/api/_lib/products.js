@@ -26,6 +26,7 @@ const PRODUCTS = {
 };
 
 function getProductPrice(productId, action) {
+    if (!Object.hasOwn(PRODUCTS, productId)) return null;
     const product = PRODUCTS[productId];
     if (!product) return null;
 
