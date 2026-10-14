@@ -1,7 +1,7 @@
 :root {
-    --blue: #FFE600;
-    --navy: #FFE600;
-    --red: #FFE600;
+    --blue: #0759c7;
+    --navy: #092b58;
+    --red: #e32636;
     --light: #f3f7fc;
     --text: #172033;
     --muted: #667085;
@@ -12,12 +12,6 @@
 * {
     box-sizing: border-box;
 }
-
-footer,
-.site-footer {
-    display: none !important;
-}
-
 
 html {
     scroll-behavior: smooth;
@@ -95,7 +89,7 @@ a {
 
 .topbar {
     background: var(--red);
-    color: #000;
+    color: #fff;
     text-align: center;
     font-size: 12px;
     font-weight: 800;
@@ -110,7 +104,7 @@ a {
 ========================================================= */
 
 .nav {
-    height: 64px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -120,17 +114,17 @@ a {
 .brand-logo {
     display: flex;
     align-items: center;
-    height: 64px;
+    height: 52px;
     max-width: 175px;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .site-logo {
     display: block;
     width: auto;
-    height: 64px;
+    height: 31px;
     max-width: 165px;
-    max-height: 64px;
+    max-height: 31px;
     object-fit: contain;
 }
 
@@ -497,7 +491,7 @@ main > .section:first-child {
 
 .timer {
     font-size: 13px;
-    color: #000;
+    color: var(--red);
     font-weight: 800;
     margin: 14px 0;
 }
@@ -1001,20 +995,19 @@ footer {
     }
 
     .nav {
-        height: 56px;
+        height: 48px;
         gap: 8px;
     }
 
     .brand-logo {
-        height: 56px;
+        height: 48px;
         max-width: 135px;
-        overflow: visible;
     }
 
     .site-logo {
-        height: 56px;
-        max-height: 56px;
-        max-width: 165px;
+        height: 28px;
+        max-height: 28px;
+        max-width: 130px;
     }
 
     .header-security-right {
@@ -1758,7 +1751,7 @@ footer {
 }
 
 .cb-kicker {
-    color: #FFE600;
+    color: #e32636;
     font-size: 12px;
     font-weight: 900;
     letter-spacing: .13em;
@@ -1834,7 +1827,7 @@ footer {
     justify-content: center;
     gap: 11px;
     border-radius: 30px;
-    background: #FFE600;
+    background: #e32636;
     color: white;
     font-size: 13px;
     font-weight: 900;
@@ -2116,7 +2109,7 @@ footer {
     left: 10px;
     padding: 7px 9px;
     border-radius: 7px;
-    background: #FFE600;
+    background: #e32636;
     color: white;
     font-size: 11px;
     font-weight: 900;
@@ -2152,7 +2145,7 @@ footer {
 
 .cb-buy-price {
     margin-top: 1px;
-    color: #14804A;
+    color: #e32636;
     font-size: 21px;
     font-weight: 900;
 }
@@ -2236,7 +2229,7 @@ footer {
 
 .cb-card-timer {
     margin: 0 !important;
-    color: #FFE600 !important;
+    color: #e32636 !important;
     font-size: 10px !important;
 }
 
@@ -3303,7 +3296,7 @@ textarea {
 }
 
 .simple-buy-button {
-    background:#14804A;
+    background:#e32636;
 }
 
 

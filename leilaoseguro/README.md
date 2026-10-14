@@ -1,5 +1,12 @@
 # Pagamentos PIX com AllowPay
 
+## Versao visual publicada
+
+As paginas, estilos, scripts e precos do catalogo foram sincronizados com a
+versao local solicitada. O site pode ser servido sob `/leilaoseguro/` quando a
+raiz do deploy e a raiz do repositorio, ou diretamente em `/` quando a raiz
+configurada na Vercel e `leilaoseguro`.
+
 O checkout usa as funcoes Node.js da Vercel. Configure a pasta raiz do projeto
 como `leilaoseguro` para servir as paginas e as rotas `/api` no mesmo dominio.
 Use Node.js 22 ou superior.

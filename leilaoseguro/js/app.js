@@ -4,10 +4,9 @@
 
 document.querySelectorAll('[data-end]').forEach(el => {
 
-    const duration = (15 + Math.floor(Math.random() * 76)) * 60 * 1000;
-    const end = Date.now() + duration;
-
-    el.style.color = '#000';
+    const end = new Date(
+        el.dataset.end
+    ).getTime();
 
     const tick = () => {
 
@@ -30,7 +29,7 @@ document.querySelectorAll('[data-end]').forEach(el => {
 
         el.textContent = left
             ? `⏱ Termina em ${h}h ${m}m ${s}s`
-            : '⏱ Termina em 0h 0m 0s';
+            : 'Encerrado';
     };
 
     tick();
